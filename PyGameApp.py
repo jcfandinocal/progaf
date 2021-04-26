@@ -8,6 +8,7 @@
 # 2021/04/10 Initial Release
 #
 ############################################
+from threading import Thread
 from Application import Application
 from collections import OrderedDict
 import pygame
@@ -20,7 +21,7 @@ class PyGameApp(Application):
     def __init__(self, width, height):
         super().__init__()
 
-        # Class Attributes
+        # Class Atrributes
         self.screenWidth = width
         self.screenHeight = height
 
@@ -43,9 +44,6 @@ class PyGameApp(Application):
         self.isRunning = True
         self.isStopped = False
         self.gameLoop()
-
-        # Close everything after quitting the game
-        self.close()
 
     def gameLoop(self):
         # Keep looping infinitely until the thread is stopped
@@ -81,7 +79,7 @@ class PyGameApp(Application):
             # Drawing section
             ####################################################################
             # Clear screen to redraw everything for each frame
-            # self.screen.fill((255, 255, 255))
+            #self.screen.fill((255, 255, 255))
             self.clearScreen()
 
             # Draw all the sprites in one go.
@@ -156,6 +154,7 @@ class PyGameApp(Application):
 
     def close(self):
         # Warning! Do not call self.close() inside main game loop or the
+        #
         # execution will block forever!.
         super().close()
 

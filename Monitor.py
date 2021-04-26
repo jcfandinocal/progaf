@@ -441,8 +441,8 @@ class Monitor:
         # Debug loop
         while True:
 
-            # # Read camera frame (non blocking)
-            # cam_ok, cam_fr = self.camera.read()
+            # Read camera frame (non blocking)
+            cam_ok, cam_fr = self.camera.read()
 
             # Read projector Frame (non blocking)
             # prj_ok, prj_fr = myApp.projector.read()
@@ -450,9 +450,9 @@ class Monitor:
             # Read Detector Frame (non blocking)
             det_ok, det_fr = self.detector.read()
 
-            # # Display Camera frames
-            # if cam_ok is True:
-            #     cv2.imshow("Camera", cam_fr)
+            # Display Camera frames
+            if cam_ok is True:
+                cv2.imshow("Camera", cam_fr)
 
             # Display Detector Frames
             if det_ok is True:
