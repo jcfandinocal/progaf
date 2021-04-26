@@ -5,7 +5,7 @@
 The goal of the project is to provide a light, conceptually clean, open source framework to support application development. Main features are:
 - Object-oriented abstraction layer providing: 
   - Hardware Integration (standard camera, depth camera, projector)
-  - Object detection, identification and tracking (with specific detectors for faces, eyes, hands, geometric shapes and blobs)
+  - Object detection, identification and tracking (with specific detectors for faces, eyes, hands, geometric shapes and blobs) using [OpenCV](https://opencv.org/) and Google [MediaPipe](https://github.com/google/mediapipe)
   - Gestures and events detection and processing
   - Easy integration of detected objects into other frameworks / game engines: 
     - PyGame
