@@ -8,7 +8,7 @@
 # 2021/04/10 Initial Release
 #
 ############################################
-from Application import Application
+from progaf.Application import Application
 from collections import OrderedDict
 import pygame
 import time

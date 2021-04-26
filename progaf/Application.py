@@ -8,11 +8,11 @@
 # 2021/04/14 Initial Release (by Keko)
 #
 ############################################
-from CentroidTracker import CentroidTracker
-from Projector import Projector
-from Profiler import Profiler
+from progaf.CentroidTracker import CentroidTracker
+from progaf.Projector import Projector
+from progaf.Profiler import Profiler
+from progaf.Camera import Camera
 from collections import OrderedDict
-from Camera import Camera
 
 
 class Application:

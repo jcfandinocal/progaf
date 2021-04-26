@@ -10,7 +10,7 @@
 ############################################
 from direct.showbase.ShowBase import ShowBase
 from direct.showbase import DirectObject
-from Application import Application
+from progaf.Application import Application
 from panda3d.core import LVecBase4f
 from collections import OrderedDict
 import time

@@ -126,7 +126,7 @@ when reading from files.
         # Initialize the camera stream and read the first frame
         if sys.platform == "linux":
             self.stream = cv2.VideoCapture(self.source, cv2.CAP_V4L2)
-        elif sys.platform == "windows":
+        elif sys.platform == "win32":
             self.stream = cv2.VideoCapture(self.source, cv2.CAP_DSHOW)
 
         # Check if the stream is open

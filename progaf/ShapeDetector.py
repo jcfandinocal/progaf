@@ -8,7 +8,7 @@
 # 2021.03.24 Initial Release (by Dani)
 #
 ############################################
-from Detector import Detector, Detection
+from progaf.Detector import Detector, Detection
 import numpy as np
 import math
 import cv2

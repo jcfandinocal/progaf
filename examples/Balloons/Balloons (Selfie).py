@@ -2,15 +2,15 @@
 # PROGAF                                   #
 # Projection Games Framework               #
 ############################################
-# Balls (Selfie).py                     #
+# Balloons (Selfie).py                     #
 ############################################
 #
 # 2021/04/16 Initial Release (by Keko)
 #
 ############################################
-from HandDetector import HandDetector
+from progaf.HandDetector import HandDetector
+from progaf.PyGameApp import PyGameApp
 from collections import OrderedDict
-from PyGameApp import PyGameApp
 from random import randint
 
 import pygame
