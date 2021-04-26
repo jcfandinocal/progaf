@@ -60,7 +60,7 @@ class myBall(pygame.sprite.Sprite):
 
     def bounce(self):
         self.velocity[1] = -self.velocity[1]
-        self.rect.y -= 10
+        self.rect.y -= 20
 
     def update(self):
         self.rect.x += self.velocity[0]
@@ -78,8 +78,9 @@ class HandPong(PyGameApp):
         self.score = 0
         self.nBalls = 0
         self.ball = OrderedDict()
+        pixels = 30
         for n in range(0, 10):
-            self.addBall(randint(30, 800), randint(30, 450))
+            self.addBall(randint(pixels, width-pixels), randint(pixels, height-pixels))
 
     ##############
     # Keyboard Input Events
@@ -88,7 +89,8 @@ class HandPong(PyGameApp):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
-                    print("Player pressed q!")
+                    # Stop the game loop
+                    self.isRunning = False
 
     ##############
     # Game Tracked Objects Update
@@ -105,7 +107,7 @@ class HandPong(PyGameApp):
         """This method is invoked by pmafApplication every time a new object position is updated in the game scene."""
 
         self.gameObjects[id_].rect.x = int(obj.xpos)
-        self.gameObjects[id_].rect.y = 440
+        self.gameObjects[id_].rect.y = self.screenHeight - self.gameObjects[id_].rect.height
 
     ##############
     # Game logic
@@ -115,13 +117,13 @@ class HandPong(PyGameApp):
         # Check screen limits
         for ballID in list(self.ball):
             obj = self.ball[ballID]
-            if obj.rect.x >= 818:
+            if obj.rect.x >= self.screenWidth-obj.rect.width:
                 obj.velocity[0] = -obj.velocity[0]
             if obj.rect.x <= 0:
                 obj.velocity[0] = -obj.velocity[0]
             if obj.rect.y <= 0:
                 obj.velocity[1] = -obj.velocity[1]
-            if obj.rect.y >= 481:
+            if obj.rect.y >= self.screenHeight:
                 self.deleteBall(ballID)
 
         # Check bounces
@@ -149,9 +151,10 @@ class HandPong(PyGameApp):
             self.gameOver()
 
     def gameOver(self):
+        pixels=30
         if self.cheat is True:
             for n in range(0, 10):
-                self.addBall(randint(30, 800), randint(30, 450))
+                self.addBall(randint(pixels, self.screenWidth-pixels), randint(pixels, self.screenHeight-pixels))
         else:
             print("GameOver")
         return
@@ -164,7 +167,7 @@ class HandPong(PyGameApp):
         # Draw captured camera frames in the game background
         self.screen.fill((0, 0, 0))
         if self.detector.frameIsValid is True:
-            background = pygame.image.frombuffer(self.detector.frame.tostring(),
+            background = pygame.image.frombuffer(self.detector.frame.tobytes(),
                                                  self.detector.frame.shape[1::-1],
                                                  "BGR")
             self.screen.blit(background, (0, 0))
@@ -180,9 +183,8 @@ class HandPong(PyGameApp):
 
 
 def main():
-    app = HandPong(848, 480)
-    app.setCamera(0, 848, 480)
-    app.setProjector(848, 480)
+    app = HandPong(1280, 720)
+    app.setCamera(0, 1280, 720)
 
     det = HandDetector(app.camera, app.projector)
     app.setDetector(det)

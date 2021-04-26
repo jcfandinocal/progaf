@@ -73,7 +73,7 @@ class myFingerTip(pygame.sprite.Sprite):
         self.image.set_colorkey((0, 0, 0))
 
         # Draw fingertip area
-        pygame.draw.circle(self.image, (255,0,0), (5, 5), 5)
+        pygame.draw.circle(self.image, (0, 0, 255), (5, 5), 5)
 
         # Fetch the rectangle object that has the dimensions of the image.
         self.rect = self.image.get_rect()
@@ -93,6 +93,7 @@ class Balloons(PyGameApp):
         self.tick = 0
         self.nextBalloon = 0
         self.balloons = OrderedDict()
+        self.popSound = pygame.mixer.Sound('Sounds/pop.wav')
 
         # Display Splash Screen
         self.splash()
@@ -133,7 +134,6 @@ class Balloons(PyGameApp):
         self.gameObjects[id_].rect.x = int(obj.xpos)
         self.gameObjects[id_].rect.y = int(obj.ypos)
 
-
     ##############
     # gameEvents. This is the user input event handler of PyGameApp class
     ############################################################################
@@ -141,33 +141,32 @@ class Balloons(PyGameApp):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
-                    print("Player pressed q!")
+                    # Stop the game loop
+                    self.isRunning = False
 
     ##############
     # gameLogic. This is the user space hook for game logic of PyGameApp class
     ############################################################################
     def gameLogic(self):
 
-        # Add new balloons
+        # Add a new balloon every 25 frames
         self.tick += 1
         if self.tick == 25:
             self.addBalloon()
             self.tick = 0
 
-        # Check Game Logic
+        # Delete Balloons outside of game area
         for balloon in list(self.balloons):
             obj = self.balloons[balloon]
-
-            # Delete Balls if outside of game area
             if obj.rect.y + obj.height <= 0:
                 self.deleteBalloon(balloon)
 
-            # Balloon-Fish collision
-            for (id_, fish) in self.gameObjects.items():
-                if pygame.sprite.collide_mask(obj, fish):
+        # Test Collisions
+        for hand in list(self.gameObjects):
+            for balloon in list(self.balloons):
+                if pygame.sprite.collide_mask(self.gameObjects[hand], self.balloons[balloon]):
+                    self.popSound.play()
                     self.deleteBalloon(balloon)
-                # Terminate loop to avoid deleting twice the same balloon
-                break
 
     def addBalloon(self):
         self.balloons[self.nextBalloon] = myRandomBalloon()
@@ -184,18 +183,17 @@ class Balloons(PyGameApp):
     ####################################################################
     def clearScreen(self):
         # Draw captured camera frames in the game background
-        self.screen.fill((0,0,0))
+        self.screen.fill((0, 0, 0))
         if self.detector.frameIsValid is True:
-            background = pygame.image.frombuffer(self.detector.frame.tostring(),
+            background = pygame.image.frombuffer(self.detector.frame.tobytes(),
                                                  self.detector.frame.shape[1::-1],
                                                  "BGR")
-            self.screen.blit(background,(0,0))
+            self.screen.blit(background, (0, 0))
 
 
 def main():
-    app = Balloons(848,480)
-    app.setCamera(0, 848, 480)
-    app.setProjector(848, 480)
+    app = Balloons(1280, 720)
+    app.setCamera(0, 1280, 720)
 
     det = HandDetector(app.camera, app.projector)
     app.setDetector(det)

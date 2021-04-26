@@ -32,7 +32,7 @@ class Profiler:
         # Camera
         if cam is not None:
             self.cam = cam
-            self.cam.perfMon = self  # FIXME: Rename perfMon to profiler
+            self.cam.profiler = self
         self.cameraFramesPerSecond = 0
         self.FATsamples = 0
         self.FATnSamples = 0
@@ -41,7 +41,7 @@ class Profiler:
         # Detector
         if det is not None:
             self.det = det
-            self.det.perfMon = self
+            self.det.profiler = self
         self.detectorFramesPerSecond = 0
         self.CDTsamples = 0
         self.CDTnSamples = 0
@@ -50,7 +50,7 @@ class Profiler:
         # Tracker
         if trk is not None:
             self.trk = trk
-            self.trk.perfMon = self
+            self.trk.profiler = self
         self.OTTsamples = 0
         self.OTTnSamples = 0
         self.OTTaverage = 0
@@ -58,8 +58,11 @@ class Profiler:
         # Projector
         if proj is not None:
             self.prj = proj
-            self.prj.perfMon = self
+            self.prj.profiler = self
         self.projectorFramesPerSecond = 0
+
+        # Monitor
+        self.monitor = mon
 
         # User space applications (APT)
         self.APTsamples = 0
@@ -73,9 +76,6 @@ class Profiler:
         self.FPT = 0
         # APT: Application Processing time (average)
         self.APT = 0
-
-        # Monitor app integration
-        self.monitor = mon
 
     def start(self):
         # Start threads
@@ -93,7 +93,7 @@ class Profiler:
             # Get Frame Counters
             camStartFrame = self.cam.frameCounter
             detStartFrame = self.det.frameCounter
-            prjStartFrame = self.prj.frameCounter
+            # prjStartFrame = self.prj.frameCounter
 
             # We just need to Sleep !!!! to ...
             time.sleep(1 / self.updateRate)
@@ -101,12 +101,12 @@ class Profiler:
             # ... update Frame Counters
             camFinalFrame = self.cam.frameCounter
             detFinalFrame = self.det.frameCounter
-            prjFinalFrame = self.prj.frameCounter
+            # prjFinalFrame = self.prj.frameCounter
 
             # Obtain FPS values
             self.cameraFramesPerSecond = (camFinalFrame - camStartFrame) * self.updateRate
             self.detectorFramesPerSecond = (detFinalFrame - detStartFrame) * self.updateRate
-            self.projectorFramesPerSecond = (prjFinalFrame - prjStartFrame) * self.updateRate
+            # self.projectorFramesPerSecond = (prjFinalFrame - prjStartFrame) * self.updateRate
 
             ###############################
             # Obtain Processing Time values
@@ -161,10 +161,11 @@ class Profiler:
                                                             self.OTTaverage / self.FPT * 100,
                                                             self.OTTaverage * 1000))
 
-            # Qt GUI Support. Update GUI
-            self.monitor.window.qLabel_CameraFPS.setText("Cam FPS: {}".format(self.cameraFramesPerSecond))
-            self.monitor.window.qLabel_DetectorFPS.setText("Det FPS: {}".format(self.detectorFramesPerSecond))
-            self.monitor.window.qLabel_ProjectorFPS.setText("Prj FPS: {}".format(self.projectorFramesPerSecond))
+            # Monitor GUI Support. Update FPS indicators
+            if self.monitor is not None:
+                self.monitor.window.qLabel_CameraFPS.setText("Cam FPS: {}".format(self.cameraFramesPerSecond))
+                self.monitor.window.qLabel_DetectorFPS.setText("Det FPS: {}".format(self.detectorFramesPerSecond))
+                self.monitor.window.qLabel_ProjectorFPS.setText("Prj FPS: {}".format(self.projectorFramesPerSecond))
 
     def stop(self):
         # Stop update thread

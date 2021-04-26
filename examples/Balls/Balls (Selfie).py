@@ -91,6 +91,7 @@ class myBroom(pygame.sprite.Sprite):
 
 
 class Balls(PyGameApp):
+
     resource = 'Themes/Spooky/Background/'
     background = pygame.image.load(resource + 'background.jpg')
 
@@ -142,7 +143,8 @@ class Balls(PyGameApp):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
-                    print("Player pressed q!")
+                    # Stop the game loop
+                    self.isRunning = False
 
     ##############
     # gameLogic. This is the user space hook for game logic of PyGameApp class
@@ -182,20 +184,12 @@ class Balls(PyGameApp):
     # frame
     ####################################################################
     def clearScreen(self):
-        # Draw captured camera frames in the game background
-        # self.screen.fill((0, 0, 0))
         self.screen.blit(Balls.background, (0, 0))
-        # if self.detector.frameIsValid is True:
-        #     background = pygame.image.frombuffer(self.detector.frame.tostring(),
-        #                                          self.detector.frame.shape[1::-1],
-        #                                          "BGR")
-        #     self.screen.blit(background,(0,0))
 
 
 def main():
     app = Balls(1920, 1080)
     app.setCamera(0, 1280, 720)
-    app.setProjector(848, 480)
 
     det = HandDetector(app.camera, app.projector)
     app.setDetector(det)
