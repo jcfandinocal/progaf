@@ -12,9 +12,9 @@ Main features are:
   - Hardware Integration (standard camera, depth camera, projector)
   - Object detection, identification and tracking (with specific detectors for faces, eyes, hands, geometric shapes and blobs) using [OpenCV](https://opencv.org) and Google [MediaPipe](https://github.com/google/mediapipe)
   - Gestures and events detection and processing
-  - Easy integration of detected objects into other frameworks / game engines: 
-    - PyGame
-    - Panda3D
+  - Integration of detected objects into existing game engines: 
+    - [PyGame](https://github.com/pygame/pygame)
+    - [Panda3D](https://www.panda3d.org)
 
 The framework also supports projection-mapping applications with specific features:
 - Easy and intuitive projector-camera alignment and calibration
