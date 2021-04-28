@@ -131,4 +131,4 @@ class DepthCamera(Camera):
 
     def read(self):
         # return the last available frame read
-        return self.frameIsValid, self.frame
+        return self.frameIsValid, self.depthFrame
