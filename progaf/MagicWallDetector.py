@@ -37,7 +37,7 @@ class MagicWallDetector(Detector):
 
         # Log file
         self.log = open("WallDetectorLog.txt", "a")
-        # self.log.write("< --- New Run ({},{},{}) --- >".format(self.minArea, self.maxArea, self.aspectRatio))
+        self.log.write("< --- New Run ({},{},{}) --- >".format(self.minArea, self.maxArea, self.aspectRatio))
 
     def update(self):
 
