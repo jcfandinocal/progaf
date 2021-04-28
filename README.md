@@ -1,6 +1,6 @@
 # Projection Games Framework
 
-[PROGAF](https://github.com/jcfandinocal/progaf) (Projection Games Framework) is python framework to support development of games and other applications using projection mapping (also known as surface projection, video mapping or spatial augmented reality) and/or real world object tracking using cameras. Expected uses for the framework include the development of games and possibly other applications across several domains including education, training, marketing, exhibition, entertainment and art.
+[PROGAF](https://github.com/jcfandinocal/progaf) (Projection Games Framework) is a python framework to support development of games and other applications using projection mapping (also known as surface projection, video mapping or spatial augmented reality) and/or real world object tracking using cameras. Expected uses for the framework include the development of games and possibly other applications across several domains including education, training, marketing, exhibition, entertainment and art.
 
 The goal of the project is to provide a light, conceptually clean, open source framework to support application development. Main features are:
 - Object-oriented abstraction layer including: 
