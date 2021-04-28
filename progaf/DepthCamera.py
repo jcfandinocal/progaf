@@ -6,6 +6,8 @@
 ############################################
 #
 # 2021/04/24 Initial Release (by Keko)
+#            Depth Camera supported:
+#            Intel realsense D-415
 #
 ############################################
 from progaf.Camera import Camera
