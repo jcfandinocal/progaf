@@ -2,10 +2,10 @@
 # PROGAF                                   #
 # Projection Games Framework               #
 ############################################
-# Camera.py                                #
+# DepthCamera.py                           #
 ############################################
 #
-# 2021/02/25 Initial Release (by Keko)
+# 2021/04/24 Initial Release (by Keko)
 #
 ############################################
 from progaf.Camera import Camera
