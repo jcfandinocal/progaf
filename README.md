@@ -23,4 +23,4 @@ The framework also supports projection-mapping applications with specific featur
 - Capabilities to render/project in real time any combination of video streams, images, textures, text or graphics
 
 ## Contributing
-Contributions are welcome. Please feel free to fork the repository and submit pull requests.
+Contributions are welcome. Please feel free to fork the repo and submit pull requests.
