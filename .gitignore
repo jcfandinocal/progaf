@@ -8,3 +8,7 @@
 /dist/
 /build/
 /progaf.egg-info/
+
+# 'Non releasable' applications
+/examples/Balls/
+/examples/PhotoBooth/
