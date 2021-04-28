@@ -16,3 +16,6 @@ The framework also supports projection-mapping applications with specific featur
 - Affine and pespective transformations of application objects
 - Projection mapping over static surfaces and/or moving objects in real time
 - Capabilities to render/project in real time any combination of video streams, images, textures, text or graphics
+
+## Installation
+To install, just run `pip install progaf`. Please take a look a the provided [examples](https://github.com/jcfandinocal/progaf/tree/main/examples)
