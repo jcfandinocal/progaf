@@ -16,7 +16,7 @@ from collections import OrderedDict
 import time
 
 
-class panda3DApp(Application, DirectObject.DirectObject):
+class Panda3DApp(Application, DirectObject.DirectObject):
     """Application encapsulates the Application logic"""
 
     def __init__(self):
