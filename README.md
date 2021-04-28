@@ -19,3 +19,5 @@ The framework also supports projection-mapping applications with specific featur
 
 ## Installation
 To install, just run `pip install progaf`. Please take a look a the provided [examples](https://github.com/jcfandinocal/progaf/tree/main/examples)
+
+## Contributing to PROGAF
