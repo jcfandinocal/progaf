@@ -2,38 +2,42 @@
 # PROGAF                                   #
 # Projection Games Framework               #
 ############################################
-# BallDetector.py                          #
+# MagicWallDetector.py                     #
 ############################################
 #
-# 2021/04/22 Initial Release (by Keko)
+# 2021/04/28 Initial Release (by Keko)
 #
 ############################################
 
-from Detector import Detector, Detection
+from progaf.Detector import Detector, Detection
 import numpy as np
 import time
 import cv2
 
 
-class BallDetector(Detector):
+class MagicWallDetector(Detector):
+    """MagicWallDetector is a combined detector designed to work with depth cameras. The class performs detection of
+    objects in the color frame and checks depth value in the depth frame, detecting only objects at a predefined
+    distance (depth)"""
 
     def __init__(self, cam, proj):
         # Call the parent class (Detector) constructor
         super().__init__(cam, proj)
 
-        # Ball Detector attributes
+        # Rect Detector attributes
         self.cannyMinVal = 150
         self.cannyMaxVal = 200
         self.cannyKernSize = 3
         self.cannyL2Grad = False
 
-        self.minArea = 400
-        self.maxArea = 14000
+        self.minArea = 500
+        self.maxArea = 5000
         self.aspectRatio = 1.0
         self.aspectRatioError = 0.1
 
         # Log file
-        self.log = open("BallDetectorLog.txt", "a")
+        self.log = open("WallDetectorLog.txt", "a")
+        # self.log.write("< --- New Run ({},{},{}) --- >".format(self.minArea, self.maxArea, self.aspectRatio))
 
     def update(self):
 
@@ -73,6 +77,8 @@ class BallDetector(Detector):
                     self.perfMon.collectCDTSample(end - start)
 
     def processFrame(self, color_frame, depth_frame):
+
+        self.log.write("\n< --- Frame {} --- >".format(self.cam.frameCounter))
 
         # Basic Canny Edge Detection
         fr_gray = cv2.cvtColor(color_frame, cv2.COLOR_BGR2GRAY)
@@ -120,7 +126,7 @@ class BallDetector(Detector):
                                 0.5, (255, 255, 255), 1)
 
                     # Log to file
-                    # self.log.write("D:{:.2f}\n".format(meanDepth[0]))
+                    self.log.write("D:{:.2f};".format(meanDepth[0]))
 
                     # # rotRect type is tuple ((cx,xy),(w,h),a)
                     # detection = ("Ball",  # object type
@@ -147,10 +153,11 @@ class BallDetector(Detector):
 
             # Display over camera frames
             blue = (255, 0, 0)
-            if detection.detection[0] == "rotatedRect":
-                box = cv2.boxPoints(detection.detection[1])
-                box = np.int0(box)
-                cv2.drawContours(self.cam.frame, [box], 0, blue, 2)
+            if self.displayOnCamera is True:
+                if detection.detection[0] == "rotatedRect":
+                    box = cv2.boxPoints(detection.detection[1])
+                    box = np.int0(box)
+                    cv2.drawContours(self.cam.frame, [box], 0, blue, 2)
 
             # Display over projector frames
             white = (255, 255, 255)

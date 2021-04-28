@@ -8,8 +8,8 @@
 # 2021/02/25 Initial Release (by Keko)
 #
 ############################################
+from progaf.Camera import Camera
 from threading import Thread
-from Camera import Camera
 import pyrealsense2 as rs
 import numpy as np
 import time
@@ -113,9 +113,9 @@ class DepthCamera(Camera):
             self.frameCounter += 1
 
             # Get loop end time and update performance monitor
-            if self.perfMon is not None:
+            if self.profiler is not None:
                 end = time.time()
-                self.perfMon.collectFATSample(end - start)
+                self.profiler.collectFATSample(end - start)
 
     def stop(self):
         if self.isRunning is False:
@@ -129,4 +129,4 @@ class DepthCamera(Camera):
 
     def read(self):
         # return the last available frame read
-        return self.frameIsValid, self.depthFrame
+        return self.frameIsValid, self.frame

@@ -23,7 +23,7 @@ class Profiler:
           amount of time that one function or method requires to be completed
     """
 
-    def __init__(self, rate=1, cam=None, det=None, trk=None, proj=None, mon=None):
+    def __init__(self, rate=1, cam=None, det=None, trk=None, proj=None):
 
         # Class attributes
         self.isRunning = False
@@ -60,9 +60,6 @@ class Profiler:
             self.prj = proj
             self.prj.profiler = self
         self.projectorFramesPerSecond = 0
-
-        # Monitor
-        self.monitor = mon
 
         # User space applications (APT)
         self.APTsamples = 0
@@ -160,12 +157,6 @@ class Profiler:
                                                             self.CDTaverage * 1000 - self.OTTaverage * 1000,
                                                             self.OTTaverage / self.FPT * 100,
                                                             self.OTTaverage * 1000))
-
-            # Monitor GUI Support. Update FPS indicators
-            if self.monitor is not None:
-                self.monitor.window.qLabel_CameraFPS.setText("Cam FPS: {}".format(self.cameraFramesPerSecond))
-                self.monitor.window.qLabel_DetectorFPS.setText("Det FPS: {}".format(self.detectorFramesPerSecond))
-                self.monitor.window.qLabel_ProjectorFPS.setText("Prj FPS: {}".format(self.projectorFramesPerSecond))
 
     def stop(self):
         # Stop update thread

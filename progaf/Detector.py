@@ -42,7 +42,7 @@ class Detector:
         self.frame = None
         self.frameIsValid = False
 
-        self.displayDetections = False
+        self.displayDetections = True
         self.displayOnCamera = True
         self.displayOnProjector = False
 

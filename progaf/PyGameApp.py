@@ -45,7 +45,7 @@ class PyGameApp(Application):
         self.gameLoop()
 
         # Close everything after quitting the game
-        self.close()
+        # self.close()
 
     def gameLoop(self):
         # Keep looping infinitely until the thread is stopped

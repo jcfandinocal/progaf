@@ -47,9 +47,8 @@ class Application:
     def setTracker(self):
         self.tracker = CentroidTracker(self.detector, self, 20)
 
-    def enableMonitor(self, updateRate=1):
-        # self.monitor = Monitor(self.camera, self.detector, self.tracker, self.projector)
-        self.profiler = Profiler(updateRate, self.camera, self.detector, self.tracker, self.projector, self.monitor)
+    def enableProfiler(self, updateRate=1):
+        self.profiler = Profiler(updateRate, self.camera, self.detector, self.tracker, self.projector)
 
     def start(self):
         if self.camera is not None:
@@ -58,8 +57,6 @@ class Application:
             self.detector.start()
         if self.projector is not None:
             self.projector.start()
-        if self.monitor is not None:
-            self.monitor.start()
         if self.profiler is not None:
             self.profiler.start()
 
@@ -74,7 +71,6 @@ class Application:
         # This is an abstract method to be implemented in sub-classes,
         # responsible of updating tracked objects in the game application
         return None
-
 
     def stop(self):
         # Stop update thread
