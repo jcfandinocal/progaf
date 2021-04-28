@@ -4,5 +4,21 @@ A python framework to develop games using real world object tracking (with camer
 ## Installation
 To install, just run `pip install progaf`. Please take a look a the provided [examples](https://github.com/jcfandinocal/progaf/tree/main/examples)
 
+## About
+The goal of the project is to provide a light, conceptually clean, open source framework to support application development. Main features are:
+- Object-oriented abstraction layer including: 
+  - Hardware Integration (standard camera, depth camera, projector)
+  - Object detection, identification and tracking (with specific detectors for faces, eyes, hands, geometric shapes and blobs) using [OpenCV](https://opencv.org) and Google [MediaPipe](https://github.com/google/mediapipe)
+  - Gestures and events detection and processing
+  - Easy integration of detected objects into other frameworks / game engines: 
+    - PyGame
+    - Panda3D
+
+The framework also supports projection-mapping applications with specific features:
+- Easy and intuitive projector-camera alignment and calibration
+- Affine and pespective transformations of application objects
+- Projection mapping over static surfaces and/or moving objects in real time
+- Capabilities to render/project in real time any combination of video streams, images, textures, text or graphics
+
 ## Contributing
 Contributions are welcome. Please feel free to fork the repository and submit pull requests.
