@@ -42,7 +42,7 @@ class Detector:
         self.frame = None
         self.frameIsValid = False
 
-        self.displayDetections = True
+        self.displayDetections = False
         self.displayOnCamera = True
         self.displayOnProjector = False
 
@@ -107,7 +107,7 @@ class Detector:
         # - Projector frames when self.displayOnProjector == True
         ########################################################################
 
-        # Display Detections
+        # Display detected contours
         for detection in self.detections:
             # in this loop:
             # box  is a rotatedBox for the detected contour (type is float numpy array of four points)
@@ -116,7 +116,7 @@ class Detector:
             # Display over camera frames
             blue = (255, 0, 0)
             if self.displayOnCamera is True:
-                cv2.circle(self.cam.frame, (detection.xpos, detection.ypos), 2, blue, -1)
+                cv2.circle(self.cam.frame, (detection.xpos, detection.ypos), 5, blue, -1)
 
             # Display over projector frames
             white = (255, 255, 255)

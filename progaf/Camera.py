@@ -12,6 +12,7 @@ from threading import Thread
 import numpy as np
 import time
 import cv2
+import sys
 
 
 class Camera:
@@ -72,12 +73,13 @@ when reading from files.
         self.cropy2 = None
         self.displayCrop = False
         self.displayGrid = False
+        self.displayFPS = True
         self.capturePath = ".\\captures\\"
 
         self.frameIsNew = False
         self.frameIsValid = False
         self.source = None
-        self.perfMon = None  # FIXME: Rename perfMon to profiler
+        self.profiler = None
 
         # Default value for camera intrinsic/extrinsic coefficients
         if cameraMatrix is not None:
@@ -122,7 +124,10 @@ when reading from files.
         self.source = src
 
         # Initialize the camera stream and read the first frame
-        self.stream = cv2.VideoCapture(self.source, cv2.CAP_DSHOW)
+        if sys.platform == "linux":
+            self.stream = cv2.VideoCapture(self.source, cv2.CAP_V4L2)
+        elif sys.platform == "win32":
+            self.stream = cv2.VideoCapture(self.source, cv2.CAP_DSHOW)
 
         # Check if the stream is open
         if self.stream.isOpened() is False:
@@ -245,6 +250,10 @@ when reading from files.
                 if self.crop is True:
                     frame = frame[self.cropy1:self.cropy2, self.cropx1:self.cropx2]
 
+                # FPS
+                if self.displayFPS is True:
+                    self.drawFPS(frame)
+
                 # Set properties for the new frame
                 self.frame = frame
                 self.frameIsValid = True
@@ -255,9 +264,9 @@ when reading from files.
                 self.stop()
 
             # Get loop end time and update performance monitor
-            if self.perfMon is not None:
+            if self.profiler is not None:
                 end = time.time()
-                self.perfMon.collectFATSample(end - start)
+                self.profiler.collectFATSample(end - start)
 
     def drawGrid(self, frame):
         pixels = 0
@@ -282,6 +291,19 @@ when reading from files.
         p1 = (self.cropx1, self.cropy1)
         p2 = (self.cropx2, self.cropy2)
         cv2.rectangle(frame, p1, p2, red)
+
+    def drawFPS(self, frame):
+        white = (255, 255, 255)
+
+        # Get actual FPS value from profiler object if available
+        if self.profiler is not None:
+            fps = self.profiler.cameraFramesPerSecond
+        else:
+            fps = 0
+
+        # Put text over frame
+        cv2.putText(frame,"FPS: {:.2f}".format(fps), (self.frameWidth-100, 20), cv2.FONT_HERSHEY_PLAIN, 1, white)
+
 
     def read(self):
         # return the last available frame read

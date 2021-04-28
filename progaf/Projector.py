@@ -8,7 +8,7 @@
 # 2021/02/25 Initial Release (by Keko)
 #
 ############################################
-from ShapeFactory import ShapeFactory
+from progaf.ShapeFactory import ShapeFactory
 from threading import Thread
 import numpy as np
 import cv2

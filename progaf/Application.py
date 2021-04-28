@@ -8,12 +8,11 @@
 # 2021/04/14 Initial Release (by Keko)
 #
 ############################################
-from CentroidTracker import CentroidTracker
-from Projector import Projector
-from Profiler import Profiler
+from progaf.CentroidTracker import CentroidTracker
+from progaf.Projector import Projector
+from progaf.Profiler import Profiler
+from progaf.Camera import Camera
 from collections import OrderedDict
-from Monitor import Monitor
-from Camera import Camera
 
 
 class Application:
@@ -49,7 +48,7 @@ class Application:
         self.tracker = CentroidTracker(self.detector, self, 20)
 
     def enableMonitor(self, updateRate=1):
-        self.monitor = Monitor(self.camera, self.detector, self.tracker, self.projector)
+        # self.monitor = Monitor(self.camera, self.detector, self.tracker, self.projector)
         self.profiler = Profiler(updateRate, self.camera, self.detector, self.tracker, self.projector, self.monitor)
 
     def start(self):
@@ -57,8 +56,8 @@ class Application:
             self.camera.start()
         if self.detector is not None:
             self.detector.start()
-        # if self.projector is not None:
-        #     self.projector.start()
+        if self.projector is not None:
+            self.projector.start()
         if self.monitor is not None:
             self.monitor.start()
         if self.profiler is not None:
@@ -82,10 +81,14 @@ class Application:
         self.isRunning = False
 
         # stop framework objects
-        self.profiler.stop()
-        self.projector.stop()
-        self.detector.stop()
-        self.camera.stop()
+        if self.profiler is not None:
+            self.profiler.stop()
+        if self.projector is not None:
+            self.projector.stop()
+        if self.detector is not None:
+            self.detector.stop()
+        if self.camera is not None:
+            self.camera.stop()
 
     def close(self):
         # stop game loop (non blocking). Please note that calling self.stop()

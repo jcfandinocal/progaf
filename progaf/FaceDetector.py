@@ -8,7 +8,7 @@
 # 2021/04/16 Initial Release (by Keko)
 #
 ############################################
-from Detector import Detector, Detection
+from progaf.Detector import Detector, Detection
 import mediapipe as mp
 import cv2
 

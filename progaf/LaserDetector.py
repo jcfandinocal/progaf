@@ -8,7 +8,7 @@
 # 2021/02/25 Initial Release (by Keko)
 #
 ############################################
-from Detector import Detector
+from progaf.Detector import Detector
 import numpy as np
 import cv2
 
