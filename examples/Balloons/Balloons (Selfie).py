@@ -8,11 +8,10 @@
 # 2021/04/16 Initial Release (by Keko)
 #
 ############################################
-from progaf.HandDetector import HandDetector
-from progaf.PyGameApp import PyGameApp
+
+from progaf import HandDetector, PyGameApp
 from collections import OrderedDict
 from random import randint
-
 import pygame
 
 
@@ -20,7 +19,7 @@ class myRandomBalloon(pygame.sprite.Sprite):
     """This class represents a balloon."""
 
     # Load sprites from disk into a static dictionary
-    resource = 'Sprites/'
+    resource = 'sprites/'
     image = {0: pygame.image.load(resource + 'BalloonRedSmall.png'),
              1: pygame.image.load(resource + 'BalloonRedMedium.png'),
              2: pygame.image.load(resource + 'BalloonRedLarge.png'),
@@ -93,7 +92,7 @@ class Balloons(PyGameApp):
         self.tick = 0
         self.nextBalloon = 0
         self.balloons = OrderedDict()
-        self.popSound = pygame.mixer.Sound('Sounds/pop.wav')
+        self.popSound = pygame.mixer.Sound('sounds/pop.wav')
 
         # Display Splash Screen
         self.splash()

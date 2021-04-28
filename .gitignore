@@ -1,2 +1,10 @@
+# PyCharm python IDE
 /.idea/
+
+# Python Virtual Environment
 /venv/
+
+# Python Packaging
+/dist/
+/build/
+/progaf.egg-info/

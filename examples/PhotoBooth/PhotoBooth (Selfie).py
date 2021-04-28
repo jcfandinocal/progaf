@@ -8,9 +8,8 @@
 # 2021/04/16 Initial Release (by Keko)
 #
 ############################################
-from FaceMeshDetector import FaceMeshDetector
-from FaceDetector import FaceDetector
-from PyGameApp import PyGameApp
+from progaf.FaceDetector import FaceDetector
+from progaf.PyGameApp import PyGameApp
 import pygame
 import math
 
@@ -27,6 +26,8 @@ class smartGlasses(pygame.sprite.Sprite):
 
         self.baseImage = pygame.image.load('sprites/GlassesParty02Blue.png')
 
+        self.rotation = 0
+        self.scale = 1
 
         # Fit
         self.fit(det)
@@ -105,6 +106,9 @@ class PhotoBooth(PyGameApp):
     def gameEvents(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    # Stop the game loop
+                    self.isRunning = False
                 if event.key == pygame.K_UP:
                     smartGlasses.yOffset += 5
                 if event.key == pygame.K_DOWN:
@@ -114,24 +118,25 @@ class PhotoBooth(PyGameApp):
                 if event.key == pygame.K_LEFT:
                     smartGlasses.xOffset += 5
 
-
     #################################
     # clearScreen. User space hook for drawing at the beginning of each frame
     #########################################################################
     def clearScreen(self):
         # Draw captured camera frames in the game background
-        self.screen.fill((0,0,0))
+        self.screen.fill((0, 0, 0))
         if self.detector.frameIsValid is True:
             background = pygame.image.frombuffer(self.detector.frame.tobytes(),
                                                  self.detector.frame.shape[1::-1],
                                                  "BGR")
-            self.screen.blit(background,(0,0))
+            self.screen.blit(background, (0, 0))
+
+
 def main():
-    app = PhotoBooth(848,480)
+    app = PhotoBooth(848, 480)
     app.setCamera(0, 848, 480)
     app.setProjector(848, 480)
 
-    #det = FaceMeshDetector(app.camera, app.projector)
+    # det = FaceMeshDetector(app.camera, app.projector)
     det = FaceDetector(app.camera, app.projector)
     app.setDetector(det)
 

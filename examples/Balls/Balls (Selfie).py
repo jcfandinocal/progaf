@@ -19,7 +19,7 @@ class myRandomGhost(pygame.sprite.Sprite):
     """This class represents a ghost."""
 
     # Load sprites from disk into a static dictionary
-    resource = 'Themes/Spooky/Sprites/'
+    resource = 'themes/Spooky/Sprites/'
     image = {0: pygame.image.load(resource + 'Ghost00.png'),
              1: pygame.image.load(resource + 'Ghost01.png'),
              2: pygame.image.load(resource + 'Ghost02.png'),
@@ -92,7 +92,7 @@ class myBroom(pygame.sprite.Sprite):
 
 class Balls(PyGameApp):
 
-    resource = 'Themes/Spooky/Background/'
+    resource = 'themes/spooky/background/'
     background = pygame.image.load(resource + 'background.jpg')
 
     def __init__(self, width, height):
@@ -103,7 +103,7 @@ class Balls(PyGameApp):
         self.tick = 0
         self.nextGhost = 0
         self.ghosts = OrderedDict()
-        self.popSound = pygame.mixer.Sound('Sounds/pop.wav')
+        self.popSound = pygame.mixer.Sound('sounds/pop.wav')
 
         # Display Splash Screen
         self.splash()
